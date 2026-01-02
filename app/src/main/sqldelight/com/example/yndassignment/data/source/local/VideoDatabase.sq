@@ -13,3 +13,7 @@ ORDER BY timestamp DESC;
 insertVideo:
 INSERT INTO VideoEntity(filePath, description, timestamp)
 VALUES (?, ?, ?);
+
+deleteVideo:
+DELETE FROM VideoEntity
+WHERE id = ?;

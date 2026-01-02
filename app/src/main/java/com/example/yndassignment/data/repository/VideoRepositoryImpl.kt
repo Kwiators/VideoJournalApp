@@ -2,9 +2,9 @@ package com.example.yndassignment.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.example.yndassignment.data.source.local.VideoDatabase
 import com.example.yndassignment.data.domain.model.VideoClip
 import com.example.yndassignment.data.domain.repository.VideoRepository
+import com.example.yndassignment.data.source.local.VideoDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -37,6 +37,12 @@ class VideoRepositoryImpl(
                 description = description,
                 timestamp = System.currentTimeMillis()
             )
+        }
+    }
+
+    override suspend fun deleteVideo(id: Long) {
+        withContext(Dispatchers.IO) {
+            db.videoDatabaseQueries.deleteVideo(id)
         }
     }
 }
