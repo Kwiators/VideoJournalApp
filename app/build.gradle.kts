@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.yndassignment"
+    namespace = "com.example.vidiary"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.yndassignment"
+        applicationId = "com.example.vidiary"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -48,7 +48,7 @@ android {
 
 sqldelight {
     databases {
-        create("VideoDatabase") { packageName.set("com.example.yndassignment.data.source.local") }
+        create("VideoDatabase") { packageName.set("com.example.vidiary.data.source.local") }
     }
 }
 

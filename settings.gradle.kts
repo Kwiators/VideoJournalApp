@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "YNDassignment"
+rootProject.name = "Vidiary"
 include(":app")
  
