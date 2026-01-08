@@ -1,7 +1,7 @@
 package com.example.vidiary.ui.presentation.camera
 
 import com.example.vidiary.MainDispatcherRule
-import com.example.vidiary.data.domain.usecase.SaveVideoUseCase
+import com.example.vidiary.domain.usecase.SaveVideoUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

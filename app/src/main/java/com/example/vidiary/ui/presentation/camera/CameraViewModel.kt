@@ -2,7 +2,7 @@ package com.example.vidiary.ui.presentation.camera
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vidiary.data.domain.usecase.SaveVideoUseCase
+import com.example.vidiary.domain.usecase.SaveVideoUseCase
 import kotlinx.coroutines.launch
 import java.io.File
 

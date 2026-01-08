@@ -1,9 +1,9 @@
 package com.example.vidiary.ui.presentation.feed
 
 import com.example.vidiary.MainDispatcherRule
-import com.example.vidiary.data.domain.model.VideoClip
-import com.example.vidiary.data.domain.usecase.DeleteVideoUseCase
-import com.example.vidiary.data.domain.usecase.GetVideosUseCase
+import com.example.vidiary.domain.model.VideoClip
+import com.example.vidiary.domain.usecase.DeleteVideoUseCase
+import com.example.vidiary.domain.usecase.GetVideosUseCase
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk

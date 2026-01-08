@@ -2,9 +2,9 @@ package com.example.vidiary.ui.presentation.feed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vidiary.data.domain.model.VideoClip
-import com.example.vidiary.data.domain.usecase.DeleteVideoUseCase
-import com.example.vidiary.data.domain.usecase.GetVideosUseCase
+import com.example.vidiary.domain.model.VideoClip
+import com.example.vidiary.domain.usecase.DeleteVideoUseCase
+import com.example.vidiary.domain.usecase.GetVideosUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

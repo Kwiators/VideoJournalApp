@@ -1,4 +1,4 @@
-package com.example.vidiary.data.domain.model
+package com.example.vidiary.domain.model
 
 data class VideoClip(
     val id: Long = 0,

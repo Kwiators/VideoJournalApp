@@ -1,6 +1,6 @@
-package com.example.vidiary.data.domain.usecase
+package com.example.vidiary.domain.usecase
 
-import com.example.vidiary.data.domain.repository.VideoRepository
+import com.example.vidiary.domain.repository.VideoRepository
 
 class SaveVideoUseCase(private val repository: VideoRepository) {
     suspend operator fun invoke(filePath: String, description: String?) {

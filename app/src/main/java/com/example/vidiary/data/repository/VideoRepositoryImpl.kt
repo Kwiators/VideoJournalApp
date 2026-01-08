@@ -2,9 +2,9 @@ package com.example.vidiary.data.repository
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.example.vidiary.data.domain.model.VideoClip
-import com.example.vidiary.data.domain.repository.VideoRepository
 import com.example.vidiary.data.source.local.VideoDatabase
+import com.example.vidiary.domain.model.VideoClip
+import com.example.vidiary.domain.repository.VideoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

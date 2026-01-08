@@ -2,9 +2,9 @@ package com.example.vidiary.di
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.example.vidiary.data.domain.repository.VideoRepository
 import com.example.vidiary.data.repository.VideoRepositoryImpl
 import com.example.vidiary.data.source.local.VideoDatabase
+import com.example.vidiary.domain.repository.VideoRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.example.vidiary.R
-import com.example.vidiary.data.domain.model.VideoClip
+import com.example.vidiary.domain.model.VideoClip
 import com.example.vidiary.ui.presentation.common.VideoPlayer
 import org.koin.androidx.compose.koinViewModel
 import java.io.File

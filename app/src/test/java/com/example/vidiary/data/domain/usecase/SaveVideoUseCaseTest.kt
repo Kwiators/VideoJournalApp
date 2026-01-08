@@ -1,6 +1,7 @@
 package com.example.vidiary.data.domain.usecase
 
-import com.example.vidiary.data.domain.repository.VideoRepository
+import com.example.vidiary.domain.repository.VideoRepository
+import com.example.vidiary.domain.usecase.SaveVideoUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

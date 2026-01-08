@@ -1,6 +1,6 @@
-package com.example.vidiary.data.domain.repository
+package com.example.vidiary.domain.repository
 
-import com.example.vidiary.data.domain.model.VideoClip
+import com.example.vidiary.domain.model.VideoClip
 import kotlinx.coroutines.flow.Flow
 
 interface VideoRepository {
