@@ -36,6 +36,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,10 +52,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -135,14 +134,16 @@ fun CameraScreen(
                         IconButton(
                             onClick = onBack,
                             modifier = Modifier.background(
-                                Color.Black.copy(alpha = 0.5f),
+                                MaterialTheme.colorScheme.surface.copy(
+                                    alpha = 0.5f
+                                ),
                                 CircleShape
                             )
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = stringResource(R.string.camera_screen_close_button_label),
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -167,7 +168,11 @@ fun CameraScreen(
                         modifier = Modifier
                             .size(80.dp)
                             .background(Color.Transparent, CircleShape)
-                            .border(4.dp, Color.White, CircleShape)
+                            .border(
+                                4.dp,
+                                MaterialTheme.colorScheme.onSurface,
+                                CircleShape
+                            )
                             .clickable {
                                 if (isRecording) {
                                     recording?.stop()
@@ -249,7 +254,10 @@ fun CameraScreen(
                         Box(
                             modifier = Modifier
                                 .size(if (isRecording) 30.dp else 60.dp)
-                                .background(Color.Red, CircleShape)
+                                .background(
+                                    MaterialTheme.colorScheme.error,
+                                    CircleShape
+                                )
                         )
                     }
 
@@ -269,14 +277,16 @@ fun CameraScreen(
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(
-                                    Color.Black.copy(alpha = 0.5f),
+                                    MaterialTheme.colorScheme.surface.copy(
+                                        alpha = 0.5f
+                                    ),
                                     CircleShape
                                 )
                         ) {
                             Icon(
                                 imageVector = Icons.Default.FlipCameraAndroid,
                                 contentDescription = stringResource(R.string.camera_screen_switch_camera_button_label),
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }
@@ -365,7 +375,9 @@ fun PermissionDeniedContent(
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(Color(0xFF121212)), // Dark background for camera feel
+                .background(
+                    MaterialTheme.colorScheme.background
+                ),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -394,9 +406,8 @@ fun PermissionDeniedContent(
 
             Text(
                 text = stringResource(R.string.camera_screen_no_permission_header),
-                color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall,
                 textAlign = TextAlign.Center
             )
 
@@ -409,8 +420,8 @@ fun PermissionDeniedContent(
                     } else {
                         stringResource(R.string.camera_screen_no_permission_permanently_denied_subheading)
                     },
-                color = Color.White.copy(alpha = 0.7f),
-                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
@@ -427,7 +438,7 @@ fun PermissionDeniedContent(
                 ) {
                     Text(
                         stringResource(R.string.camera_screen_no_permission_grant_permissions_button_label),
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             } else {
@@ -440,7 +451,7 @@ fun PermissionDeniedContent(
                 ) {
                     Text(
                         stringResource(R.string.camera_screen_no_permission_open_settings_button_label),
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             }
@@ -450,8 +461,8 @@ fun PermissionDeniedContent(
             TextButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) {
                 Text(
                     stringResource(R.string.camera_screen_no_permission_back_button_label),
-                    color = Color.White.copy(alpha = 0.6f),
-                    fontSize = 14.sp
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
@@ -464,13 +475,17 @@ fun PermissionIcon(icon: ImageVector, label: String) {
         Box(
             modifier = Modifier
                 .size(64.dp)
-                .background(Color.White.copy(alpha = 0.1f), CircleShape),
+                .background(
+                    MaterialTheme.colorScheme.primary.copy(
+                        alpha = 0.1f
+                    ), CircleShape
+                ),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = label,
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(32.dp)
             )
         }

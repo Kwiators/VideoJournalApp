@@ -108,15 +108,18 @@ fun FeedScreen(onNavigateToCamera: () -> Unit, viewModel: FeedViewModel = koinVi
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
                 colors =
                     ButtonDefaults.buttonColors(
-                        containerColor = Color.White.copy(alpha = 0.9f),
-                        contentColor = Color.Black
+                        containerColor =
+                            MaterialTheme.colorScheme.primaryContainer.copy(
+                                alpha = 0.9f
+                            ),
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                     )
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.size(8.dp))
                 Text(
                     stringResource(R.string.feed_screen_record_video_button),
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }
@@ -259,22 +262,23 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                                 Text(
                                     stringResource(R.string.feed_screen_delete_video_label),
                                 )
-                                    },
+                            },
                             text = {
                                 Text(
                                     stringResource(R.string.feed_screen_delete_alert_content)
                                 )
-                                   },
+                            },
                             confirmButton = {
                                 TextButton(
                                     onClick = {
                                         showDeleteDialog = false
                                         onDeleteClick()
                                     }
-                                ) { Text(
-                                    stringResource(R.string.feed_screen_delete_alert_delete_button_label),
-                                    color = Color.Red
-                                )
+                                ) {
+                                    Text(
+                                        stringResource(R.string.feed_screen_delete_alert_delete_button_label),
+                                        color = MaterialTheme.colorScheme.error
+                                    )
                                 }
                             },
                             dismissButton = {
@@ -320,12 +324,15 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                     Spacer(modifier = Modifier.width(8.dp))
                     IconButton(
                         onClick = { showDeleteDialog = true },
-                        modifier = Modifier.background(Color.Red.copy(alpha = 0.3f), CircleShape)
+                        modifier = Modifier.background(
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.3f),
+                            CircleShape
+                        )
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = stringResource(R.string.feed_screen_delete_video_button_label),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onError
                         )
                     }
                 }
