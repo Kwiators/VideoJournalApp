@@ -1,4 +1,4 @@
-package com.example.yndassignment
+package com.example.vidiary
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

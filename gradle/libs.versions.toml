@@ -13,10 +13,12 @@ koin = "4.1.1"
 media3 = "1.9.0"
 camerax = "1.5.2"
 accompanist = "0.37.3"
-mockk = "1.14.7"
 coroutinesTest = "1.10.2"
 navigationCompose = "2.9.6"
 uiText = "1.10.0"
+mockkVersion = "1.14.7"
+coilCompose = "3.3.0"
+coilNetworkOkhttp = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,10 +60,12 @@ accompanist-permissions = { group = "com.google.accompanist", name = "accompanis
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 # Testing
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
+mockk-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coilNetworkOkhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

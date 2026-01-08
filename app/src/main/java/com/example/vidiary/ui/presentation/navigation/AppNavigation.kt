@@ -20,8 +20,8 @@ fun AppNavigation() {
         }
         composable(AppNavigationRoutes.Camera.routeSchema) {
             CameraScreen(
-                onVideoSaved = { navController.popBackStack() },
-                onBack = { navController.popBackStack() }
+                onVideoSaved = { navController.navigate(AppNavigationRoutes.Feed.routeSchema) },
+                onBack = { navController.navigate(AppNavigationRoutes.Feed.routeSchema) }
             )
         }
     }

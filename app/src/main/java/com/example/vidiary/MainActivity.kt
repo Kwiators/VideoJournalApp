@@ -8,13 +8,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.vidiary.ui.presentation.navigation.AppNavigation
-import com.example.vidiary.ui.theme.YNDAssignmentTheme
+import com.example.vidiary.ui.theme.VidiaryTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            YNDAssignmentTheme {
+            VidiaryTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
