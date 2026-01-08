@@ -7,6 +7,7 @@ import com.example.vidiary.data.domain.usecase.GetVideosUseCase
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -22,6 +23,7 @@ class FeedViewModelTest {
     private val getVideosUseCase = mockk<GetVideosUseCase>()
     private val deleteVideoUseCase = mockk<DeleteVideoUseCase>(relaxed = true)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `videos state updates when use case emits videos`() = runTest {
         // Given

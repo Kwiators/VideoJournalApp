@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Vidiary</string>
+
+
+    <!--   feed screen   -->
+    <string name="feed_screen.videos_empty_banner">No videos yet.</string>
+    <string name="feed_screen.record_first_video">Record your first video</string>
+    <string name="feed_screen.record_video_button">Record New Video</string>
+    <string name="feed_screen.replay_video_label">Replay</string>
+    <string name="feed_screen.delete_video_label">Delete</string>
+    <string name="feed_screen.delete_alert_content">Are you sure you want to delete this video?</string>
+    <string name="feed_screen.delete_alert_delete_button_label">Delete</string>
+    <string name="feed_screen.delete_alert_cancel_button_label">Cancel</string>
+    <string name="feed_screen.share_vide_button_label">Share</string>
+    <string name="feed_screen.delete_video_button_label">Delete</string>
+
+    <!--   camera screen   -->
+    <string name="camera_screen.close_button_label">Close</string>
+    <string name="camera_screen.recording_fail_toast_message">Recording failed: </string>
+    <string name="camera_screen.audio_permission_fail_toast_message">Permission required to record audio</string>
+    <string name="camera_screen.audio_permission_required_toast_message">Audio permission is required</string>
+    <string name="camera_screen.switch_camera_button_label">Switch Camera</string>
+    <string name="camera_screen.save_video_alert_title">Save Video</string>
+    <string name="camera_screen.save_video_alert_text_field_label">Add a description (optional):</string>
+    <string name="camera_screen.save_video_alert_save_button_label">Save</string>
+    <string name="camera_screen.save_video_alert_discard_button_label">Discard</string>
+    <string name="camera_screen.no_permission_camera_icon_label">Camera</string>
+    <string name="camera_screen.no_permission_microphone_icon_label">Microphone</string>
+    <string name="camera_screen.no_permission_header">Permissions Required</string>
+    <string name="camera_screen.no_permission_subheading">To record your video diary, Vidiary needs access to your camera and microphone.</string>
+    <string name="camera_screen.no_permission_permanently_denied_subheading">Camera and microphone access is permanently denied. Please enable them in system settings to continue.</string>
+    <string name="camera_screen.no_permission_grant_permissions_button_label">Grant Permissions</string>
+    <string name="camera_screen.no_permission_open_settings_button_label">Open Settings</string>
+    <string name="camera_screen.no_permission_back_button_label">Maybe Later</string>
+
+
 </resources>

@@ -1,6 +1,9 @@
 package com.example.vidiary.ui.presentation.camera
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.FileOutputOptions
@@ -27,12 +30,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FlipCameraAndroid
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -42,11 +48,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.example.vidiary.R
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import org.koin.androidx.compose.koinViewModel
@@ -71,11 +83,22 @@ fun CameraScreen(
                 )
         )
 
+    val showRationale = permissionsState.shouldShowRationale
+
     var isRecording by remember { mutableStateOf(false) }
     var recording: Recording? by remember { mutableStateOf(null) }
     var showSaveDialog by remember { mutableStateOf(false) }
     var recordedFile by remember { mutableStateOf<File?>(null) }
     var description by remember { mutableStateOf("") }
+
+    val toastRecordingFail =
+        stringResource(R.string.camera_screen_recording_fail_toast_message)
+
+    val toastAudioPermissionFail =
+        stringResource(R.string.camera_screen_audio_permission_fail_toast_message)
+
+    val toastAudioPermissionRequired =
+        stringResource(R.string.camera_screen_audio_permission_required_toast_message)
 
     val cameraController = remember {
         LifecycleCameraController(context).apply {
@@ -112,13 +135,13 @@ fun CameraScreen(
                         IconButton(
                             onClick = onBack,
                             modifier = Modifier.background(
-                                    Color.Black.copy(alpha = 0.5f),
-                                    CircleShape
-                                )
+                                Color.Black.copy(alpha = 0.5f),
+                                CircleShape
+                            )
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Close,
-                                contentDescription = "Close",
+                                contentDescription = stringResource(R.string.camera_screen_close_button_label),
                                 tint = Color.White
                             )
                         }
@@ -190,7 +213,8 @@ fun CameraScreen(
                                                                 recording = null
                                                                 Toast.makeText(
                                                                     context,
-                                                                    "Recording failed: ${event.cause?.message}",
+                                                                    (toastRecordingFail + (event.cause?.message
+                                                                        ?: "n/a")),
                                                                     Toast.LENGTH_SHORT
                                                                 )
                                                                     .show()
@@ -205,7 +229,7 @@ fun CameraScreen(
                                         } catch (_: SecurityException) {
                                             Toast.makeText(
                                                 context,
-                                                "Permission required to record audio",
+                                                toastAudioPermissionFail,
                                                 Toast.LENGTH_SHORT
                                             )
                                                 .show()
@@ -213,7 +237,7 @@ fun CameraScreen(
                                     } else {
                                         Toast.makeText(
                                             context,
-                                            "Audio permission is required",
+                                            toastAudioPermissionRequired,
                                             Toast.LENGTH_SHORT
                                         )
                                             .show()
@@ -251,7 +275,7 @@ fun CameraScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.FlipCameraAndroid,
-                                contentDescription = "Switch Camera",
+                                contentDescription = stringResource(R.string.camera_screen_switch_camera_button_label),
                                 tint = Color.White
                             )
                         }
@@ -263,10 +287,16 @@ fun CameraScreen(
         if (showSaveDialog) {
             AlertDialog(
                 onDismissRequest = {},
-                title = { Text("Save Video") },
+                title = {
+                    Text(
+                        stringResource(R.string.camera_screen_save_video_alert_title)
+                    )
+                },
                 text = {
                     Column {
-                        Text("Add a description (optional):")
+                        Text(
+                            stringResource(R.string.camera_screen_save_video_alert_text_field_label)
+                        )
                         Spacer(
                             modifier = Modifier.height(8.dp)
                         )
@@ -288,32 +318,161 @@ fun CameraScreen(
                                 onVideoSaved()
                             }
                         }
-                    ) { Text("Save") }
+                    ) {
+                        Text(
+                            stringResource(R.string.camera_screen_save_video_alert_save_button_label)
+                        )
+                    }
                 },
                 dismissButton = {
                     Button(
                         onClick = {
-                            // Discard video
                             recordedFile?.delete()
-                            onVideoSaved() // Or onBack()
+                            showSaveDialog = false
                         }
-                    ) { Text("Discard") }
+                    ) {
+                        Text(
+                            stringResource(R.string.camera_screen_save_video_alert_discard_button_label)
+                        )
+                    }
                 }
             )
         }
     } else {
+        PermissionDeniedContent(
+            showRationale = showRationale,
+            onRequestPermission = { permissionsState.launchMultiplePermissionRequest() },
+            onOpenSettings = {
+                val intent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                    }
+                context.startActivity(intent)
+            },
+            onBack = onBack
+        )
+    }
+}
+
+@Composable
+fun PermissionDeniedContent(
+    showRationale: Boolean,
+    onRequestPermission: () -> Unit,
+    onOpenSettings: () -> Unit,
+    onBack: () -> Unit
+) {
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Color(0xFF121212)), // Dark background for camera feel
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Visual indicators
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PermissionIcon(
+                    icon = Icons.Default.Videocam,
+                    stringResource(R.string.camera_screen_no_permission_camera_icon_label)
+                )
+                PermissionIcon(
+                    icon = Icons.Default.Mic,
+                    stringResource(R.string.camera_screen_no_permission_microphone_icon_label)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = stringResource(R.string.camera_screen_no_permission_header),
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text =
+                    if (showRationale) {
+                        stringResource(R.string.camera_screen_no_permission_subheading)
+                    } else {
+                        stringResource(R.string.camera_screen_no_permission_permanently_denied_subheading)
+                    },
+                color = Color.White.copy(alpha = 0.7f),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(48.dp))
+
+            if (showRationale) {
+                Button(
+                    onClick = onRequestPermission,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = CircleShape
+                ) {
+                    Text(
+                        stringResource(R.string.camera_screen_no_permission_grant_permissions_button_label),
+                        fontSize = 16.sp
+                    )
+                }
+            } else {
+                Button(
+                    onClick = onOpenSettings,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = CircleShape
+                ) {
+                    Text(
+                        stringResource(R.string.camera_screen_no_permission_open_settings_button_label),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            TextButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    stringResource(R.string.camera_screen_no_permission_back_button_label),
+                    color = Color.White.copy(alpha = 0.6f),
+                    fontSize = 14.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun PermissionIcon(icon: ImageVector, label: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .size(64.dp)
+                .background(Color.White.copy(alpha = 0.1f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text("Camera and Audio permissions are required to record video.")
-            Button(
-                onClick = {
-                    permissionsState.launchMultiplePermissionRequest()
-                }
-            ) {
-                Text("Grant Permissions")
-            }
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = Color.White,
+                modifier = Modifier.size(32.dp)
+            )
         }
     }
 }

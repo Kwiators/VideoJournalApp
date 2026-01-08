@@ -43,17 +43,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import com.example.vidiary.R
 import com.example.vidiary.data.domain.model.VideoClip
 import com.example.vidiary.ui.presentation.common.VideoPlayer
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 @Composable
 fun FeedScreen(onNavigateToCamera: () -> Unit, viewModel: FeedViewModel = koinViewModel()) {
@@ -63,14 +66,16 @@ fun FeedScreen(onNavigateToCamera: () -> Unit, viewModel: FeedViewModel = koinVi
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = "No videos yet.",
+                    text = stringResource(R.string.feed_screen_videos_empty_banner),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(onClick = onNavigateToCamera) {
                     Icon(Icons.Default.Add, contentDescription = null)
                     Spacer(modifier = Modifier.size(8.dp))
-                    Text("Record your first video")
+                    Text(
+                        stringResource(R.string.feed_screen_record_first_video)
+                    )
                 }
             }
         }
@@ -91,7 +96,7 @@ fun FeedScreen(onNavigateToCamera: () -> Unit, viewModel: FeedViewModel = koinVi
                 )
             }
 
-            // Record Button Overlay: Centered, stretched, and flat
+            // Record Button
             Button(
                 onClick = onNavigateToCamera,
                 modifier = Modifier
@@ -110,7 +115,7 @@ fun FeedScreen(onNavigateToCamera: () -> Unit, viewModel: FeedViewModel = koinVi
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
                 Spacer(modifier = Modifier.size(8.dp))
                 Text(
-                    "Record New Video",
+                    stringResource(R.string.feed_screen_record_video_button),
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -172,14 +177,14 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "Replay",
+                            contentDescription = stringResource(R.string.feed_screen_replay_video_label),
                             tint = Color.White,
                             modifier = Modifier.size(48.dp)
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Replay",
+                        stringResource(R.string.feed_screen_replay_video_label),
                         color = Color.White,
                         style = MaterialTheme.typography.labelLarge
                     )
@@ -235,8 +240,9 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                         Spacer(modifier = Modifier.height(4.dp))
                     }
                     Text(
-                        text = SimpleDateFormat("dd MMM yyyy, HH:mm")
-                            .format(Date(video.timestamp)),
+                        text =
+                            SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault())
+                                .format(Date(video.timestamp)),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.8f)
                     )
@@ -249,19 +255,37 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                     if (showDeleteDialog) {
                         AlertDialog(
                             onDismissRequest = { showDeleteDialog = false },
-                            title = { Text("Delete Video") },
-                            text = { Text("Are you sure you want to delete this video?") },
+                            title = {
+                                Text(
+                                    stringResource(R.string.feed_screen_delete_video_label),
+                                )
+                                    },
+                            text = {
+                                Text(
+                                    stringResource(R.string.feed_screen_delete_alert_content)
+                                )
+                                   },
                             confirmButton = {
                                 TextButton(
                                     onClick = {
                                         showDeleteDialog = false
                                         onDeleteClick()
                                     }
-                                ) { Text("Delete", color = Color.Red) }
+                                ) { Text(
+                                    stringResource(R.string.feed_screen_delete_alert_delete_button_label),
+                                    color = Color.Red
+                                )
+                                }
                             },
                             dismissButton = {
-                                TextButton(onClick = { showDeleteDialog = false }) {
-                                    Text("Cancel")
+                                TextButton(
+                                    onClick = {
+                                        showDeleteDialog = false
+                                    }
+                                ) {
+                                    Text(
+                                        stringResource(R.string.feed_screen_delete_alert_cancel_button_label)
+                                    )
                                 }
                             }
                         )
@@ -289,7 +313,7 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Share,
-                            contentDescription = "Share",
+                            contentDescription = stringResource(R.string.feed_screen_share_vide_button_label),
                             tint = Color.White
                         )
                     }
@@ -300,7 +324,7 @@ fun VideoItem(video: VideoClip, isFocused: Boolean, onDeleteClick: () -> Unit) {
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
+                            contentDescription = stringResource(R.string.feed_screen_delete_video_button_label),
                             tint = Color.White
                         )
                     }
