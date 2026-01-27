@@ -17,3 +17,8 @@ VALUES (?, ?, ?);
 deleteVideo:
 DELETE FROM VideoEntity
 WHERE id = ?;
+
+getVideoById:
+SELECT *
+FROM VideoEntity
+WHERE id = ?;

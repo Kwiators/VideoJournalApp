@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class VideoRepositoryImpl(
     private val db: VideoDatabase
@@ -42,6 +43,13 @@ class VideoRepositoryImpl(
 
     override suspend fun deleteVideo(id: Long) {
         withContext(Dispatchers.IO) {
+            val video = db.videoDatabaseQueries.getVideoById(id).executeAsOneOrNull()
+            video?.filePath?.let { path ->
+                val file = File(path)
+                if (file.exists()) {
+                    file.delete()
+                }
+            }
             db.videoDatabaseQueries.deleteVideo(id)
         }
     }
