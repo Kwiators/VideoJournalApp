@@ -15,13 +15,13 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = AppNavigationRoutes.Feed.routeSchema) {
         composable(AppNavigationRoutes.Feed.routeSchema) {
             FeedScreen(
-                onNavigateToCamera = { navController.navigate(AppNavigationRoutes.Camera.routeSchema) }
+                onNavigateToCamera = { navController.popBackStack() }
             )
         }
         composable(AppNavigationRoutes.Camera.routeSchema) {
             CameraScreen(
-                onVideoSaved = { navController.navigate(AppNavigationRoutes.Feed.routeSchema) },
-                onBack = { navController.navigate(AppNavigationRoutes.Feed.routeSchema) }
+                onVideoSaved = { navController.popBackStack() },
+                onBack = { navController.popBackStack() }
             )
         }
     }
