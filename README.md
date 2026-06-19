@@ -2,6 +2,18 @@
 
 Vidiary is a lightweight Android application for recording and keeping a personal video journal. It focuses on simplicity and a smooth user experience.
 
+## Table of Contents
+
+* [Project Overview](#project-overview)
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Setup Instructions](#setup-instructions)
+* [License](#license)
+
+## Project Overview
+
+Vidiary allows users to record short video entries and store them locally on their device. The application provides a simple feed-based interface for browsing and replaying journal entries while keeping all data private.
+
 ## Features
 - **Video Recording**: record short video clips with ease.
 - **Local Storage**: video descriptions and metadata stored locally.
